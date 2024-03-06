@@ -24,20 +24,23 @@ function MoleHill(props) {
         }
     }
     useEffect(() => {
-        let randSeconds = Math.ceil(Math.random() * 1000)
-        let otherRandSeconds = 200 +  Math.ceil(Math.random() * 1000)
-        let timer = setTimeout(() => {
-            setMoleActive(true)
-            setTimeout(() => {
+        if (Math.random() < 0.5) {
+            let randSeconds = Math.ceil(Math.random() * 1000)
+            let otherRandSeconds = 700 +  Math.ceil(Math.random() * 1000)
+            let timer = setTimeout(() => {
+                setMoleActive(true)
+                setTimeout(() => {
                 setMoleActive(false)
             }, otherRandSeconds);
         }, randSeconds)
         return () => clearTimeout(timer)
+        }
+        
     })
 
     return (
         <div className="mole-hill">
-            <img onClick={hillClicked} src={moleActive ? hillwmolepng : hillpng} alt={moleActive ? "A mole sprouting from a hill." : "A hill with no mole."} />
+            <img draggable="false" onClick={hillClicked} src={moleActive ? hillwmolepng : hillpng} alt={moleActive ? "A mole sprouting from a hill." : "A hill with no mole."} />
         </div>
     )
 }
