@@ -1,5 +1,5 @@
 # Gwhac - a - Mole
-
+![Image](readmepreviewslides.gif)
 
 A little play on whack-a-mole. In this case, I've made the hills into piles of Guacamole.
 I went above and beyond for this project, far exceeding any instructions, and I'm super proud of it.
