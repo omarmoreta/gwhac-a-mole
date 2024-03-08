@@ -91,7 +91,7 @@ const endGame = () => {
 
   const createHills = () => {
     let hills = []
-    for (let count = 0; count < 9; count++) {
+    for (let count = 1; count <= 9; count++) {
       hills.push(<MoleHill
           key={count}
           setScore={setScore}
