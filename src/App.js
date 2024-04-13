@@ -1,6 +1,6 @@
 
 import './App.css';
-import React,  { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MoleHill from './MoleHill.jsx';
 
 function App() {
@@ -11,27 +11,27 @@ function App() {
   let [status, setStatus] = useState("Press Start to begin!")
   let [message, setMessage] = useState(["message-good", "placeholder good message"])
   let [gameState, setGameState] = useState("pregame")
-  
+
   const gameMessages = [
-    {time: 10, message: ["message-good", "Go whacky on them!"]},
-    {time: 9, message: ["message-bad", "They're coming out of the guacamole!"]},
-    {time: 6, message: ["message-bad", ""]},
-    {time: 5, message: ["message-mid", "Halfway through!"]},
-    {time: 3, message: ["message-bad", "Running out of time!"]},
+    { time: 10, message: ["message-good", "Go whacky on them!"] },
+    { time: 9, message: ["message-bad", "They're coming out of the guacamole!"] },
+    { time: 6, message: ["message-bad", ""] },
+    { time: 5, message: ["message-mid", "Halfway through!"] },
+    { time: 3, message: ["message-bad", "Running out of time!"] },
   ]
 
   const missMessages = [
     "Guac but no mole!",
-    "You suck!", 
+    "You suck!",
     "There's no mole there!"
   ]
 
   const hitMessages = [
     "You are whack!",
-    "Caught him dipping!", 
+    "Caught him dipping!",
     "So whacky!",
   ]
-  
+
   //start game
   // && trigger countdown with useeffect
   // && set game state countdown
@@ -41,8 +41,8 @@ function App() {
     setGameState("countdown")
   }
 
- //countdown useeffect which ultimately triggers timeleft use effect
- //&& set game state active
+  //countdown useeffect which ultimately triggers timeleft use effect
+  //&& set game state active
   useEffect(() => {
     if (countDown > 0) {
       setStatus("Game starts in: " + countDown)
@@ -58,7 +58,7 @@ function App() {
   //&& set message
   //&& set game state
   useEffect(() => {
-    if(timeLeft > 0) {
+    if (timeLeft > 0) {
       intervalToZero(timeLeft, setTimeLeft)
     } else if (timeLeft <= 0) {
       endGame()
@@ -70,7 +70,13 @@ function App() {
     })
   }, [timeLeft])
 
-const endGame = () => {
+  const endGame = () => {
+    let data = window.sessionStorage.getItem("score");
+    if (!data) {
+      window.sessionStorage.setItem("score", score);
+    } else {
+      window.sessionStorage.setItem("score", parseInt(score) + parseInt(data))
+    }
     setGameState("over")
     setStatus("Game Over! Final Score: " + score)
   }
@@ -87,20 +93,20 @@ const endGame = () => {
   }
 
 
-  
+
 
   const createHills = () => {
     let hills = []
     for (let count = 1; count <= 9; count++) {
       hills.push(<MoleHill
-          key={count}
-          setScore={setScore}
-          score={score} 
-          message={message}
-          setMessage={setMessage}
-          missMessages={missMessages}
-          hitMessages={hitMessages}
-          />)
+        key={count}
+        setScore={setScore}
+        score={score}
+        message={message}
+        setMessage={setMessage}
+        missMessages={missMessages}
+        hitMessages={hitMessages}
+      />)
     }
     return <div className='mole-hill-container'>{hills}</div>
   }
@@ -112,23 +118,23 @@ const endGame = () => {
 
       {gameState === "pregame" ?
         <button onClick={startGame} className='start-button'>Start</button>
-        : null }
+        : null}
 
       {gameState === "active" ?
         <div className='game-container'>
-        <div className='score-time-bar'>
-          <h2>Score: {score}</h2>
-          <h2>Time left: {timeLeft}</h2>
-        </div>
-        {createHills()}
-        <h3 className={message[0]}>{message[1]}</h3>
-      </div> : null } 
+          <div className='score-time-bar'>
+            <h2>Score: {score}</h2>
+            <h2>Time left: {timeLeft}</h2>
+          </div>
+          {createHills()}
+          <h3 className={message[0]}>{message[1]}</h3>
+        </div> : null}
 
 
-      
+
       {gameState === "over"
-        ? 
-        
+        ?
+
         <button onClick={startGame} className='start-button'>Restart</button>
         :
         null
